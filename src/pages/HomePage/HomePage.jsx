@@ -1,6 +1,6 @@
 import React from 'react';
 import MovieList from './components/MovieList/MovieList';
-import { Carousel } from 'antd';
+import {Carousel } from 'antd';
 const data = [
   {
     id: 1,

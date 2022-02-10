@@ -11,7 +11,7 @@ const MovieCard = ({movie}) => {
     <Link to={`/movie/${movie.id}`}>
       <Card
       hoverable
-      style={{ maxWidth: "300px", borderRadius: '10px', overflow: 'hidden'}}
+      style={{ maxWidth: '300px', borderRadius: '10px', overflow: 'hidden'}}
       cover ={<img style={{height: '250px'}} src={movie.image} alt={movie.title} />}>
         <Meta title={movie.title} description={movie.description} />
       </Card>

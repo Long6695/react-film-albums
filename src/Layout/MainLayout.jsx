@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 // antd
-import { Layout, Typography, Menu, List, Image, Carousel  } from 'antd';
+import { Layout, Typography, Menu, List, Image } from 'antd';
 import {HomeOutlined, UserOutlined, LoginOutlined} from '@ant-design/icons';
 // router
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 //hooks
 import useIsMobile from '../hooks/useIsMobile';
 //style
@@ -56,8 +56,10 @@ const MainLayout = ({children}) => {
   const isMobile = useIsMobile()
   const { Content, Sider } = Layout;
   const {Title} = Typography
+  const location = useLocation()
+
   return (
-        <Layout hasSider style={{minHeight: '100vh'}}>
+        <Layout style={{minHeight: '100vh'}}>
           <Sider
             style={styledSider}
             collapsible
@@ -71,18 +73,18 @@ const MainLayout = ({children}) => {
               </Link>
             </div>
 
-            <Menu style={styledSider} theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <Menu.Item key="1" icon={<HomeOutlined />}>
+            <Menu style={styledSider} theme="dark" defaultSelectedKeys={[location.pathname]} mode="inline">
+              <Menu.Item key="/" icon={<HomeOutlined />}>
                 <span>Home</span>
                 <Link to="/"/>
               </Menu.Item>
 
-              <Menu.Item key="2" icon={<UserOutlined />}>
+              <Menu.Item key="/register" icon={<UserOutlined />}>
                 <span>Register</span>
                 <Link to="/register"/>
               </Menu.Item>
 
-              <Menu.Item key="3" icon={<LoginOutlined />}>
+              <Menu.Item key="/login" icon={<LoginOutlined />}>
                 <span>Login</span>
                 <Link to="/login"/>
               </Menu.Item>
@@ -92,20 +94,21 @@ const MainLayout = ({children}) => {
               <Content>
                 {children}
               </Content>
-              
               {!isMobile && 
-              <Sider width={300}
-              style={{overflow: 'auto', position: 'relative', top: '0', right: '0', bottom: '0'}}
+              <Sider 
+              width={300}
               >
                 <List
                 itemLayout='horizontal'
                 dataSource={data}
                 renderItem={item => (
-                <Link to={`/movie/${item.id}`}>
-                  <List.Item style={{padding: '10px'}}>
+                <Link to={`/movie/${item.id}`} >
+                  <List.Item style={{
+                    height: '100px',
+                    backgroundColor: '#fff',padding: '10px', marginBottom: '20px'}}>
                     <List.Item.Meta
                       style={{color: '#fff'}}
-                      avatar={<Image width={80} src={item.image}/>}
+                      avatar={<Image width={100} src={item.image}/>}
                       title={item.title}
                       description={item.description}
                     />

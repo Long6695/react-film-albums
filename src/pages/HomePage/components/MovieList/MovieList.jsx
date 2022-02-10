@@ -9,7 +9,6 @@ const MovieList = ({movies}) => {
     style={{padding: '20px'}}
     grid ={{
       gutter: 16,
-      xs: 1,
       sm: 1,
       md: 2,
       lg: 3,
@@ -18,7 +17,7 @@ const MovieList = ({movies}) => {
     dataSource={movies}
     renderItem={
       movie => (
-        <List.Item key={movie.key} style={{display: 'flex', justifyContent: 'center'}}>
+        <List.Item key={movie.key} >
           <MovieCard movie={movie}/>
         </List.Item>
       )

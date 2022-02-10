@@ -21,7 +21,7 @@ const useIsMobile = () => {
     return () => {
       window.removeEventListener('resize', getWidthWindow)
     }
-  })
+  },[width])
 
   return isMobile
 }
