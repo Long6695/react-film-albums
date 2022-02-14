@@ -3,7 +3,7 @@ import MovieCard from '../MovieCard/MovieCard'
 
 import { List } from 'antd';
 
-const MovieList = ({movies}) => {
+const MovieList = ({films}) => {
   return (
     <List
     style={{padding: '20px'}}
@@ -14,11 +14,11 @@ const MovieList = ({movies}) => {
       lg: 3,
       xl: 4,
     }}
-    dataSource={movies}
+    dataSource={films}
     renderItem={
-      movie => (
-        <List.Item key={movie.key} >
-          <MovieCard movie={movie}/>
+      film => (
+        <List.Item key={film.key} >
+          <MovieCard film={film}/>
         </List.Item>
       )
     }

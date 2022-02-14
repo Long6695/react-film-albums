@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import FilmProvider from './context/FilmContext';
 
 import 'antd/dist/antd.min.css';
 import './index.css';
 ReactDOM.render(
-  <React.StrictMode>
+  <FilmProvider>
     <App />
-  </React.StrictMode>,
+  </FilmProvider>,
   document.getElementById('root')
 );

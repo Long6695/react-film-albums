@@ -22,3 +22,11 @@ a {
   text-decoration: none;
   color: #fff;
 }
+
+.ant-list-item-meta-description {
+  display: inline-block;
+  width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

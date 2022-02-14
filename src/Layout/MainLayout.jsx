@@ -4,6 +4,8 @@ import { Layout, Typography, Menu, List, Image } from 'antd';
 import {HomeOutlined, UserOutlined, LoginOutlined} from '@ant-design/icons';
 // router
 import { Link, useLocation } from 'react-router-dom';
+//context
+import { useFilmsContext } from '../context/FilmContext';
 //hooks
 import useIsMobile from '../hooks/useIsMobile';
 //style
@@ -11,52 +13,13 @@ const styledSider = {
   backgroundColor: '#0d1321'
 }
 
-const data = [
-  {
-    id: 1,
-    image: 'https://amp.ex-cdn.com/EXP/media.mgn.vn/resize/560x315/files/news/2020/09/11/review-marvels-avengers-biet-doi-sieu-anh-hung-tap-hop-175749.jpg',
-    description: 'Avengers is the best movie',
-    title: 'Avengers',
-  },
-  {
-    id: 2,
-    image: 'https://media-cdn.laodong.vn/storage/newsportal/2019/8/21/750466/Sinh-Nhat-Mot-Ong-Em-01.jpg',
-    description: 'Spider man is the best movie',
-    title: 'Spider man',
-  },
-  {
-    id: 3,
-    image: 'https://media-cdn.laodong.vn/storage/newsportal/2021/12/10/983341/Phim-The-Witcher-2.jpg?w=720&crop=auto&scale=both',
-    description: 'The Witcher is the best movie',
-    title: 'The Witcher',
-  },
-  {
-    id: 4,
-    image: 'https://a1.cdn.japantravel.com/photo/50097-188699/1440x960!/tokyo-one-piece-halloween-188699.jpg',
-    description: 'One piece is the best movie',
-    title: 'One piece',
-  },
-  {
-    id: 5,
-    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgzGx8UiqR6oLoEsmzhdvCGBQ6Y5OVty5L_w&usqp=CAU',
-    description: 'Naruto is the best movie',
-    title: 'Naruto',
-  },
-  {
-    id: 6,
-    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQi9qWHn0FKtj620LkjaxyQa6zaWc-aFeB2og&usqp=CAU',
-    description: 'Supperman is the best movie',
-    title: 'Supperman',
-  },
-]
-
-
 const MainLayout = ({children}) => {
   const [collapsed, setCollapsed] = useState(false)
   const isMobile = useIsMobile()
   const { Content, Sider } = Layout;
   const {Title} = Typography
   const location = useLocation()
+  const {films} = useFilmsContext()
 
   return (
         <Layout style={{minHeight: '100vh'}}>
@@ -94,21 +57,21 @@ const MainLayout = ({children}) => {
               <Content>
                 {children}
               </Content>
-              {!isMobile && 
+              {!isMobile &&
               <Sider 
               width={300}
               >
                 <List
                 itemLayout='horizontal'
-                dataSource={data}
+                dataSource={films}
                 renderItem={item => (
-                <Link to={`/movie/${item.id}`} >
+                <Link to={`/movie/${item._id}`} >
                   <List.Item style={{
                     height: '100px',
-                    backgroundColor: '#fff',padding: '10px', marginBottom: '20px'}}>
+                    backgroundColor: '#fff', marginBottom: '20px'}}>
                     <List.Item.Meta
                       style={{color: '#fff'}}
-                      avatar={<Image width={100} src={item.image}/>}
+                      avatar={<Image width={80} height={100} src={item.banner}/>}
                       title={item.title}
                       description={item.description}
                     />
