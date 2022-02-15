@@ -2,14 +2,15 @@ import React from 'react';
 import {Form, Input, Typography, Button} from 'antd';
 import { Link } from 'react-router-dom';
 import { UserOutlined, MailOutlined, LockOutlined } from '@ant-design/icons'
+import { useFilmsContext } from '../../context/FilmContext';
 const RegisterPage = () => {
-
+  const { registerUser } = useFilmsContext()
   const formItemLayout = {
         wrapperCol: { span: 24 },
       }
 
   const onFinish = (value) => {
-    console.log(value)
+    registerUser(value)
   }
   return (
     <div style={{padding: '10px'}}>
@@ -21,7 +22,7 @@ const RegisterPage = () => {
         onFinish={onFinish}
         >
           <Form.Item
-          name="username"
+          name="userName"
           rules={[{required: true, message: 'Please input your Username!'}]}
           >
             <Input prefix={<UserOutlined/>} placeholder="Username"/>

@@ -16,14 +16,14 @@ const styledSider = {
 const MainLayout = ({children}) => {
   const [collapsed, setCollapsed] = useState(false)
   const isMobile = useIsMobile()
-  const { Content, Sider } = Layout;
+  const {Header, Content, Sider } = Layout;
   const {Title} = Typography
   const location = useLocation()
   const {films} = useFilmsContext()
 
   return (
         <Layout style={{minHeight: '100vh'}}>
-          <Sider
+          {!isMobile ? (<Sider
             style={styledSider}
             collapsible
             collapsed={collapsed} 
@@ -52,7 +52,28 @@ const MainLayout = ({children}) => {
                 <Link to="/login"/>
               </Menu.Item>
             </Menu>
-          </Sider>
+          </Sider>)
+          : (
+            <Header>
+              <Menu theme="dark" defaultSelectedKeys={[location.pathname]} mode="horizontal">
+                <Menu.Item key="/" icon={<HomeOutlined />}>
+                  <span>Home</span>
+                  <Link to="/"/>
+                </Menu.Item>
+
+                <Menu.Item key="/register" icon={<UserOutlined />}>
+                  <span>Register</span>
+                  <Link to="/register"/>
+                </Menu.Item>
+
+                <Menu.Item key="/login" icon={<LoginOutlined />}>
+                  <span>Login</span>
+                  <Link to="/login"/>
+                </Menu.Item>
+              </Menu>
+            </Header>
+            )
+          }
           <Layout style={styledSider}>
               <Content>
                 {children}

@@ -1,14 +1,18 @@
 import React from 'react';
-import {Form, Input, Button, Checkbox, Typography} from 'antd';
+import {Form, Input, Button, Typography} from 'antd';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import { useFilmsContext } from '../../context/FilmContext';
 const LoginPage = () => {
+  const { loginUser } = useFilmsContext()
+  
+
   const formItemLayout = {
     wrapperCol: { span: 24 },
   }
 
   const onFinish = (value) => {
-    console.log(value)
+    loginUser(value)
   }
   
   return (
@@ -37,12 +41,6 @@ const LoginPage = () => {
           rules={[{required: true, message: 'Please input your password'}]}
           >
           <Input prefix={<LockOutlined />} placeholder="Password" type="password"/>
-        </Form.Item>
-
-        <Form.Item>
-          <Form.Item name="remember" valuePropName="checked" noStyle>
-            <Checkbox>Remember me</Checkbox>
-          </Form.Item>
         </Form.Item>
 
         <Form.Item>
