@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Form, Input, Button, Typography} from 'antd';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import { Link , useNavigate} from 'react-router-dom';
 import { useFilmsContext } from '../../context/FilmContext';
 const LoginPage = () => {
-  const { loginUser } = useFilmsContext()
-  
+  const { loginUser, isLoginSuccess } = useFilmsContext()
+  const navigate = useNavigate()
 
   const formItemLayout = {
     wrapperCol: { span: 24 },
@@ -14,6 +14,13 @@ const LoginPage = () => {
   const onFinish = (value) => {
     loginUser(value)
   }
+  
+  useEffect(() => {
+    if(isLoginSuccess) {
+      navigate('/')
+    }
+    // eslint-disable-next-line
+  },[isLoginSuccess])
   
   return (
     <div style={{padding: '10px'}}>

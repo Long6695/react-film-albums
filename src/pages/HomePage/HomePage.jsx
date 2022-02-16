@@ -7,7 +7,6 @@ const contentStyle = {
   height: '400px',
   background: '#1d2d44',
 };
-
 const HomePage = ({films}) => {
   return (
     <div style={{backgroundColor:'#1d2d44'}}>

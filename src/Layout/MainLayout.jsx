@@ -19,8 +19,13 @@ const MainLayout = ({children}) => {
   const {Header, Content, Sider } = Layout;
   const {Title} = Typography
   const location = useLocation()
-  const {films} = useFilmsContext()
+  const {films, isLoginSuccess, setIsLoginSuccess} = useFilmsContext()
 
+  const handleClearToken = () => {
+    localStorage.removeItem('token')
+    setIsLoginSuccess(false)
+  }
+  
   return (
         <Layout style={{minHeight: '100vh'}}>
           {!isMobile ? (<Sider
@@ -48,8 +53,16 @@ const MainLayout = ({children}) => {
               </Menu.Item>
 
               <Menu.Item key="/login" icon={<LoginOutlined />}>
-                <span>Login</span>
+              {isLoginSuccess ? (
+                <>
+                <span onClick={handleClearToken}>Logout</span>
+                </>
+              ) : (
+                <>
+                <span >Login</span>
                 <Link to="/login"/>
+                </>
+              )}
               </Menu.Item>
             </Menu>
           </Sider>)
@@ -67,9 +80,17 @@ const MainLayout = ({children}) => {
                 </Menu.Item>
 
                 <Menu.Item key="/login" icon={<LoginOutlined />}>
-                  <span>Login</span>
-                  <Link to="/login"/>
-                </Menu.Item>
+                  {isLoginSuccess ? (
+                    <>
+                    <span onClick={handleClearToken}>Logout</span>
+                    </>
+                  ) : (
+                    <>
+                    <span >Login</span>
+                    <Link to="/login"/>
+                    </>
+                  )}
+              </Menu.Item>
               </Menu>
             </Header>
             )

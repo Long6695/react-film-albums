@@ -3,8 +3,10 @@ import {Form, Input, Typography, Button} from 'antd';
 import { Link } from 'react-router-dom';
 import { UserOutlined, MailOutlined, LockOutlined } from '@ant-design/icons'
 import { useFilmsContext } from '../../context/FilmContext';
+import CustomModal from '../../components/Modal';
 const RegisterPage = () => {
-  const { registerUser } = useFilmsContext()
+  const { registerUser, isRegisterSuccess } = useFilmsContext()
+
   const formItemLayout = {
         wrapperCol: { span: 24 },
       }
@@ -12,6 +14,11 @@ const RegisterPage = () => {
   const onFinish = (value) => {
     registerUser(value)
   }
+
+  if(isRegisterSuccess) {
+    return (<CustomModal link={'/login'}>Register Successfully</CustomModal>)
+  }
+
   return (
     <div style={{padding: '10px'}}>
         <Typography.Title level={2} style={{textAlign: 'center', color: '#fff', marginTop: '50px'}}>Sign Up</Typography.Title>

@@ -1,11 +1,12 @@
 import React, {createContext, useContext, useState, useEffect} from 'react'
 import httpRequest from '../services/httpRequest'
-
 const FilmContext = createContext()
 
 const FilmProvider = ({children}) => {
   const [films, setFilms] = useState([])
   const [film, setFilm] = useState({})
+  const [isLoginSuccess, setIsLoginSuccess] = useState(false)
+  const [isRegisterSuccess, setIsRegisterSuccess] = useState(false)
 
   const getDetailFilmById = async (id) => {
     if(!id) return
@@ -22,25 +23,17 @@ const FilmProvider = ({children}) => {
     const res = await httpRequest.post('http://localhost:3000/api/users/login', data)
 
     if(res.data.isSuccess) {
+      setIsLoginSuccess(res.data.isSuccess)
       localStorage.setItem('token', res.data.token)
     }
   }
 
   const registerUser = async (data) => {
     const res = await httpRequest.post('http://localhost:3000/api/users/register', data)
-    console.log(res)
-  }
-
-  const decodedToken = async (token) => {
-    if(!token) return
-    const res = await httpRequest.checkToken('http://localhost:3000/api/auth', 
-    {
-      headers: {
-        'x-auth-token': token
-      }
+    
+    if(res.data.isSuccess) {
+      setIsRegisterSuccess(res.data.isSuccess)
     }
-    )
-    console.log(res)
   }
 
   useEffect(() => {
@@ -52,7 +45,7 @@ const FilmProvider = ({children}) => {
   },[])
 
   return (
-    <FilmContext.Provider value={{films, film, setFilm, getDetailFilmById, loginUser, registerUser, decodedToken}}>
+    <FilmContext.Provider value={{films, film, setFilm, getDetailFilmById, loginUser, registerUser, isLoginSuccess,setIsLoginSuccess, isRegisterSuccess}}>
       {children}
     </FilmContext.Provider>
   )
