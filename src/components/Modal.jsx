@@ -1,12 +1,15 @@
 import React, {useState} from 'react'
 import { Modal } from 'antd'
 import { useNavigate } from 'react-router-dom';
+
 const CustomModal = ({link, children}) => {
   const [isModalVisible, setIsModalVisible] = useState(true);
+
   const navigate = useNavigate()
+
   const handleOk = () => {
     setIsModalVisible(false);
-    navigate(link)
+    navigate(link, {replace: true})
   };
 
   const handleCancel = () => {

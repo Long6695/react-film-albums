@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Modal from '../components/Modal';
 import { useNavigate } from 'react-router-dom'
 import httpRequest from '../services/httpRequest';
 import { useFilmsContext } from '../context/FilmContext';
 const Authenticate = ({children}) => {
-  const [user, setUser] = useState({})
   const token = localStorage.getItem('token')
-  const {setIsLoginSuccess} = useFilmsContext()
+  const {setIsLoginSuccess, user, setUser} = useFilmsContext()
   const navigate = useNavigate()
 
   useEffect(() => {
+    if(!token) return 
+    
     const checkUser = async () => {
       const res = await httpRequest.post('http://localhost:3000/api/auth',{},{
         headers: {

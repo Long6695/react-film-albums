@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 // antd
 import { Layout, Typography, Menu, List, Image } from 'antd';
-import {HomeOutlined, UserOutlined, LoginOutlined} from '@ant-design/icons';
+import {HomeOutlined, UserOutlined, LoginOutlined, FormOutlined} from '@ant-design/icons';
 // router
 import { Link, useLocation } from 'react-router-dom';
 //context
@@ -19,13 +19,13 @@ const MainLayout = ({children}) => {
   const {Header, Content, Sider } = Layout;
   const {Title} = Typography
   const location = useLocation()
-  const {films, isLoginSuccess, setIsLoginSuccess} = useFilmsContext()
+  const {films, isLoginSuccess, setIsLoginSuccess, user} = useFilmsContext()
 
   const handleClearToken = () => {
     localStorage.removeItem('token')
     setIsLoginSuccess(false)
   }
-  
+
   return (
         <Layout style={{minHeight: '100vh'}}>
           {!isMobile ? (<Sider
@@ -47,6 +47,11 @@ const MainLayout = ({children}) => {
                 <Link to="/"/>
               </Menu.Item>
 
+              <Menu.Item key="/add-film" icon={<FormOutlined />}>
+                <span>Add Film</span>
+                <Link to="/add-film"/>
+              </Menu.Item>
+
               <Menu.Item key="/register" icon={<UserOutlined />}>
                 <span>Register</span>
                 <Link to="/register"/>
@@ -55,7 +60,8 @@ const MainLayout = ({children}) => {
               <Menu.Item key="/login" icon={<LoginOutlined />}>
               {isLoginSuccess ? (
                 <>
-                <span onClick={handleClearToken}>Logout</span>
+                <span onClick={handleClearToken}>Logout {user.email}
+                </span>
                 </>
               ) : (
                 <>
@@ -74,6 +80,11 @@ const MainLayout = ({children}) => {
                   <Link to="/"/>
                 </Menu.Item>
 
+                <Menu.Item key="/add-film" icon={<FormOutlined />}>
+                  <span>Add Film</span>
+                  <Link to="/addFilm"/>
+                </Menu.Item>
+
                 <Menu.Item key="/register" icon={<UserOutlined />}>
                   <span>Register</span>
                   <Link to="/register"/>
@@ -82,7 +93,7 @@ const MainLayout = ({children}) => {
                 <Menu.Item key="/login" icon={<LoginOutlined />}>
                   {isLoginSuccess ? (
                     <>
-                    <span onClick={handleClearToken}>Logout</span>
+                    <span onClick={handleClearToken}>Logout {user.email}</span>
                     </>
                   ) : (
                     <>

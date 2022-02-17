@@ -30,3 +30,12 @@ a {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.ant-form-item-label .ant-form-item-required {
+  color: #fff;
+  font-size: 20px;
+}
+
+.ant-spin-nested-loading .ant-row {
+  margin: 0 auto;
+}
