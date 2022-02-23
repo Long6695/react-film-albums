@@ -1,88 +1,96 @@
 import React from 'react';
-import {Form, Input, Typography, Button} from 'antd';
+import { Form, Input, Typography, Button } from 'antd';
 import { Link } from 'react-router-dom';
-import { UserOutlined, MailOutlined, LockOutlined } from '@ant-design/icons'
+import { UserOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
 import { useFilmsContext } from '../../context/FilmContext';
 import CustomModal from '../../components/Modal';
 const RegisterPage = () => {
-  const { registerUser, isRegisterSuccess } = useFilmsContext()
+  const { registerUser, isRegisterSuccess } = useFilmsContext();
 
   const formItemLayout = {
-        wrapperCol: { span: 24 },
-      }
+    wrapperCol: { span: 24 },
+  };
 
   const onFinish = (value) => {
-    registerUser(value)
-  }
+    registerUser(value);
+  };
 
-  if(isRegisterSuccess) {
-    return (<CustomModal link={'/login'}>Register Successfully</CustomModal>)
+  if (isRegisterSuccess) {
+    return <CustomModal link={'/login'}>Register Successfully</CustomModal>;
   }
 
   return (
-    <div style={{padding: '10px'}}>
-        <Typography.Title level={2} style={{textAlign: 'center', color: '#fff', marginTop: '50px'}}>Sign Up</Typography.Title>
-        <Form
-        style={{margin: '0 auto', maxWidth: '800px', width: '100%'}}
+    <div style={{ padding: '10px' }}>
+      <Typography.Title
+        level={2}
+        style={{ textAlign: 'center', color: '#fff', marginTop: '50px' }}
+      >
+        Sign Up
+      </Typography.Title>
+      <Form
+        style={{ margin: '0 auto', maxWidth: '800px', width: '100%' }}
         {...formItemLayout}
         name="register"
         onFinish={onFinish}
-        >
-          <Form.Item
+      >
+        <Form.Item
           name="userName"
-          rules={[{required: true, message: 'Please input your Username!'}]}
-          >
-            <Input prefix={<UserOutlined/>} placeholder="Username"/>
-          </Form.Item>
+          rules={[{ required: true, message: 'Please input your Username!' }]}
+        >
+          <Input prefix={<UserOutlined />} placeholder="Username" />
+        </Form.Item>
 
-          <Form.Item
+        <Form.Item
           name="email"
-          rules={[{required: true, message: "Please input your Email!"},
-          {type:"email", message: 'The input is not valid Email!'}
+          rules={[
+            { required: true, message: 'Please input your Email!' },
+            { type: 'email', message: 'The input is not valid Email!' },
           ]}
-          >
-            <Input prefix={<MailOutlined/>} placeholder="Email" />
-          </Form.Item>
+        >
+          <Input prefix={<MailOutlined />} placeholder="Email" />
+        </Form.Item>
 
-          <Form.Item
+        <Form.Item
           name="password"
-          rules={[{required: true, message: 'Please input your password'}
-          ]}
-          >
-            <Input.Password prefix={<LockOutlined />} placeholder='Password'/>
-          </Form.Item>
-          <Form.Item
+          rules={[{ required: true, message: 'Please input your password' }]}
+        >
+          <Input.Password prefix={<LockOutlined />} placeholder="Password" />
+        </Form.Item>
+        <Form.Item
           name="confirm"
           dependencies={['password']}
           rules={[
             {
-            required: true,
-            message: 'Please confirm your password!',
+              required: true,
+              message: 'Please confirm your password!',
             },
-            ({getFieldValue}) => (
-              {
-                validator(_, value) {
-                  if(!value || getFieldValue('password') === value) {
-                    return Promise.resolve()
-                  }
-                  return Promise.reject(new Error('The two passwords that you entered do not match!'))
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue('password') === value) {
+                  return Promise.resolve();
                 }
-              }
-            )
+                return Promise.reject(
+                  new Error('The two passwords that you entered do not match!')
+                );
+              },
+            }),
           ]}
-          >
-            <Input.Password prefix={<LockOutlined />} placeholder='Confirm password'/>
-          </Form.Item>
+        >
+          <Input.Password
+            prefix={<LockOutlined />}
+            placeholder="Confirm password"
+          />
+        </Form.Item>
 
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Sign Up
-            </Button>
-            Or <Link to="/login">have an account!</Link>
-          </Form.Item>
-        </Form>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Sign Up
+          </Button>
+          Or <Link to="/login">have an account!</Link>
+        </Form.Item>
+      </Form>
     </div>
-  )
+  );
 };
 
 export default RegisterPage;

@@ -1,15 +1,13 @@
-import React, {useState} from 'react'
-import { Modal } from 'antd'
+import React, { useState } from 'react';
+import { Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
-
-const CustomModal = ({link, children}) => {
+const CustomModal = ({ link, children }) => {
   const [isModalVisible, setIsModalVisible] = useState(true);
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleOk = () => {
     setIsModalVisible(false);
-    navigate(link, {replace: true})
+    navigate(link, { replace: true });
   };
 
   const handleCancel = () => {
@@ -17,10 +15,15 @@ const CustomModal = ({link, children}) => {
   };
 
   return (
-    <Modal title="Notice" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-        <p style={{fontSize: "20px"}}>{children}</p>
+    <Modal
+      title="Notice"
+      visible={isModalVisible}
+      onOk={handleOk}
+      onCancel={handleCancel}
+    >
+      <p style={{ fontSize: '20px' }}>{children}</p>
     </Modal>
-  )
-}
+  );
+};
 
-export default CustomModal
+export default CustomModal;

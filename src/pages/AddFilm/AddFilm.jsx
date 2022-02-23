@@ -1,86 +1,94 @@
-import React from 'react'
-import { Form, Input, Button } from 'antd'
+import React, { useEffect } from 'react';
+import { Form, Input, Button, Typography } from 'antd';
 
 import CustomModal from '../../components/Modal';
 
-import {useFilmsContext} from '../../context/FilmContext'
+import { useFilmsContext } from '../../context/FilmContext';
 
 const AddFilm = () => {
-  const { addFilm, isAddFilmSuccess } = useFilmsContext()
-  const token = localStorage.getItem('token')
+  const { addFilm, isAddFilmSuccess, setIsAddFilmSuccess } = useFilmsContext();
+  const token = localStorage.getItem('token');
 
-  
   const onFinish = (values) => {
-    const token = localStorage.getItem('token')
-    if(!token) return
+    const token = localStorage.getItem('token');
+    if (!token) return;
 
-    addFilm(values, token)
-  }
-  
-  if(!token) {
-    return <CustomModal link={'/login'}> Please login to add film. </CustomModal>
+    addFilm(values, token);
+  };
+
+  useEffect(() => {
+    setIsAddFilmSuccess(false);
+    // eslint-disable-next-line
+  }, []);
+
+  if (!token) {
+    return (
+      <CustomModal link={'/login'}> Please login to add film. </CustomModal>
+    );
   }
 
-  if(isAddFilmSuccess) {
-    return <CustomModal link={'/'}> Add Film Successfully! </CustomModal>
+  if (isAddFilmSuccess) {
+    return <CustomModal link={'/'}> Add Film Successfully! </CustomModal>;
   }
 
   return (
-    <Form
-      style={{margin: '20px'}}
-      name="basic"
-      labelCol={{ span: 4 }}
-      wrapperCol={{ span: 16 }}
-      initialValues={{ remember: true }}
-      onFinish={onFinish}
-      autoComplete="off"
-    >
-
-      <Form.Item
-      label="Title"
-      name="title"
-      rules={[{required: true, message: 'Please input film title'}]}
+    <div style={{ padding: '10px', overflow: 'hidden' }}>
+      <Typography.Title
+        level={2}
+        style={{ textAlign: 'center', color: '#fff', marginTop: '50px' }}
       >
-        <Input />
-      </Form.Item>
+        Add Film
+      </Typography.Title>
 
-      <Form.Item
-      label="Quote"
-      name="quote"
-      rules={[{required: true, message: 'Please input film quote'}]}
+      <Form
+        style={{ margin: '0 auto', maxWidth: '900px', width: '100%' }}
+        name="basic"
+        wrapperCol={{ span: 24 }}
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+        autoComplete="off"
       >
-        <Input />
-      </Form.Item>
+        <Form.Item
+          name="title"
+          rules={[{ required: true, message: 'Please input film title' }]}
+        >
+          <Input placeholder="Title" />
+        </Form.Item>
 
-      <Form.Item
-      label="Description"
-      name="description"
-      rules={[{required: true, message: 'Please input film description'}]}
-      >
-        <Input />
-      </Form.Item>
+        <Form.Item
+          name="quote"
+          rules={[{ required: true, message: 'Please input film quote' }]}
+        >
+          <Input placeholder="Quote" />
+        </Form.Item>
 
-      <Form.Item
-      label="Banner"
-      name="banner"
-      rules={[{required: true, message: 'Please input film banner'}]}
-      >
-        <Input />
-      </Form.Item>
+        <Form.Item
+          name="description"
+          rules={[{ required: true, message: 'Please input film description' }]}
+        >
+          <Input placeholder="Description" />
+        </Form.Item>
 
-      <Form.Item
-        wrapperCol={{
-          offset: 10,
-          span: 20,
-        }}
-      >
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
+        <Form.Item
+          name="banner"
+          rules={[{ required: true, message: 'Please input film banner' }]}
+        >
+          <Input placeholder="Banner" />
+        </Form.Item>
 
-    </Form>
-  )
-}
+        <Form.Item
+          wrapperCol={{
+            offset: 12,
+            span: 24,
+          }}
+        >
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+    </div>
+  );
+};
 
-export default AddFilm
+export default AddFilm;
