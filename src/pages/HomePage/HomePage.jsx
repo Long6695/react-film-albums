@@ -13,8 +13,9 @@ const useQueryString = () => {
   return new URLSearchParams(useLocation().search);
 };
 
-const HomePage = ({ films }) => {
-  const { totalFilm, fetchFilmsData } = useFilmsContext();
+const HomePage = () => {
+  console.log('13')
+  const { totalFilm, fetchFilmsData, films } = useFilmsContext();
   const navigate = useNavigate();
 
   const queryString = useQueryString();

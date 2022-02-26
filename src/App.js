@@ -1,14 +1,24 @@
 import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+// context
+import { useFilmsContext } from './context/FilmContext';
+
+// layout
 import MainLayout from './Layout/MainLayout';
+
+// pages
 import HomePage from './pages/HomePage/HomePage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import MovieDetail from './pages/MovieDetail/MovieDetail';
 import Authenticate from './auth/Authenticate';
 import AddFilm from './pages/AddFilm/AddFilm';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useFilmsContext } from './context/FilmContext';
 import EditFilm from './pages/EditFilm/EditFilm';
+
+// guards
+import AuthGuards from './guards/AuthGuards';
+import GuestGuard from './guards/GuestGuards';
 
 const App = () => {
   const { films } = useFilmsContext();
@@ -20,7 +30,9 @@ const App = () => {
           path="/"
           element={
             <MainLayout>
-              <HomePage films={films} />
+              <AuthGuards>
+                <HomePage films={films} />
+              </AuthGuards>
             </MainLayout>
           }
         />
@@ -29,7 +41,9 @@ const App = () => {
           path="/add-film"
           element={
             <MainLayout>
-              <AddFilm />
+              <AuthGuards>
+                <AddFilm />
+              </AuthGuards>
             </MainLayout>
           }
         />
@@ -38,7 +52,9 @@ const App = () => {
           path="/register"
           element={
             <MainLayout>
-              <RegisterPage />
+              <GuestGuard>
+                <RegisterPage />
+              </GuestGuard>
             </MainLayout>
           }
         />
@@ -47,7 +63,9 @@ const App = () => {
           path="/login"
           element={
             <MainLayout>
-              <LoginPage />
+              <GuestGuard>
+                <LoginPage />
+              </GuestGuard>
             </MainLayout>
           }
         />
@@ -67,9 +85,9 @@ const App = () => {
           path="/edit/:id"
           element={
             <MainLayout>
-              <Authenticate>
+              <AuthGuards>
                 <EditFilm />
-              </Authenticate>
+              </AuthGuards>
             </MainLayout>
           }
         />
